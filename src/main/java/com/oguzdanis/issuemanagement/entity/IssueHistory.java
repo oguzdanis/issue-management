@@ -24,47 +24,47 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.security.core.userdetails.User;
 
 /**
  *
  * @author tatata
  */
 @Entity
-@Table(name = "issue")
+@Table(name = "issue_history")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-
-
-public class Issue extends BaseEntity{
+public class IssueHistory extends BaseEntity{
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    @Column(name = "issue")
+    @ManyToOne(optional = true,fetch = FetchType.LAZY)
+    private Issue issue;
+    
     @Column(name = "description",length = 1000)
     private String description;
     
-    @Column(name = "detail",length = 4000)
-    private String detail;
-    
-    @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date")
     private Date date;
     
-    @Column(name = "description")
+    @Column(name = "issue_status")
     @Enumerated(EnumType.STRING)
     private IssueStatus issueStatus;
+    
+    @Column(name = "details",length = 1000)
+    private String details;
     
     @JoinColumn(name="assignee_user_id")
     @ManyToOne(optional = true,fetch = FetchType.LAZY)
     private User assignee;
     
-    @JoinColumn
-    @ManyToOne(optional = true,fetch = FetchType.LAZY)
-    private Project project;
     
+            
+            
 }
